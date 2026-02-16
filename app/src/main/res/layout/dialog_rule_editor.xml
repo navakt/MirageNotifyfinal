@@ -2,7 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,70 +20,95 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Define how notifications should be intercepted and modified."
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp" />
+
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:hint="@string/rule_name">
+            android:hint="Rule Name (e.g., Hide WhatsApp Chat)">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_rule_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text" />
+                android:inputType="textCapSentences" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/target_app"
+            android:text="Target Application"
             android:textStyle="bold" />
 
-        <Spinner
-            android:id="@+id/spinner_apps"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select the app to monitor for sensitive alerts."
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp" />
+
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:minHeight="48dp" />
+            android:background="@drawable/circle_shape"
+            android:backgroundTint="@color/surface">
+
+            <Spinner
+                android:id="@+id/spinner_apps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp" />
+        </FrameLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/modification_type"
+            android:text="Modification Logic"
             android:textStyle="bold" />
 
         <RadioGroup
             android:id="@+id/rg_modification_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:orientation="vertical">
 
             <RadioButton
                 android:id="@+id/rb_replace"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/type_replace_text" />
+                android:text="Replace matched text with new content" />
 
             <RadioButton
                 android:id="@+id/rb_mask"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/type_mask_text" />
+                android:text="Mask sensitive keywords with asterisks (*)" />
 
             <RadioButton
                 android:id="@+id/rb_rename"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/type_rename_sender" />
+                android:text="Rename sender or completely hide content" />
         </RadioGroup>
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="@string/search_text">
+            android:layout_marginTop="16dp"
+            android:hint="Search Pattern (leave empty to match all)">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_search_text"
@@ -93,10 +119,11 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_replacement"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="@string/replacement_text">
+            android:layout_marginTop="12dp"
+            android:hint="Replacement Text">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_replacement_text"
@@ -108,27 +135,35 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Apply to:"
+            android:layout_marginTop="20dp"
+            android:text="Intercept and Apply to:"
             android:textStyle="bold" />
 
-        <CheckBox
-            android:id="@+id/cb_title"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/modify_title" />
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            android:paddingBottom="16dp">
 
-        <CheckBox
-            android:id="@+id/cb_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/modify_content" />
+            <CheckBox
+                android:id="@+id/cb_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Notification Title" />
 
-        <CheckBox
-            android:id="@+id/cb_sender"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/modify_sender" />
+            <CheckBox
+                android:id="@+id/cb_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Message Body / Content" />
+
+            <CheckBox
+                android:id="@+id/cb_sender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sender Name / Sub-text" />
+        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>
