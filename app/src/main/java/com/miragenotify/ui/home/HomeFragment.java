@@ -1,6 +1,5 @@
 package com.miragenotify.ui.home;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.miragenotify.R;
 import com.miragenotify.utils.NotificationHelper;
@@ -66,12 +66,20 @@ public class HomeFragment extends Fragment {
         });
         
         view.findViewById(R.id.btn_manage_rules).setOnClickListener(v -> {
-            // Navigate to rules fragment
-            requireActivity().findViewById(R.id.bottom_navigation).setSelected(false);
+            // Properly navigate to rules fragment using BottomNavigationView
+            BottomNavigationView nav = requireActivity().findViewById(R.id.bottom_navigation);
+            if (nav != null) {
+                nav.setSelectedItemId(R.id.nav_rules);
+            }
         });
         
         // Observe data
         observeData();
+    }
+    
+    @Override
+    public void onResume() {
+        super.onResume();
         updateServiceStatus();
     }
     
